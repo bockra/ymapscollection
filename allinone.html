@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+                                                                                                                     
+<head>                                                                                                               
+    <title> ymaps </title>                                                            
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />                                            
+    <script src="//api-maps.yandex.ru/2.0/?load=package.standard&lang=ru-RU" type="text/javascript"></script>        
+                                                                                                                     
+<script type="text/javascript">                                                                                      
+                                                                                                                     
+                                                                                                                     
+    var test1 = [                                                                                                   { coords: [43.512, 131.882], text: 'Владивосток' },
+{ coords: [56.412, 92.852], text: 'Красноярск' },
+{ coords: [55.432, 82.922], text: 'Новосибирск' },
+],                                                                                                           
+        test2 = [                                                                                                 
+{ coords: [55.751, 37.611], text: 'Москва(11дц)' },
+{ coords: [55.791, 49.101], text: 'Казань' },
+{ coords: [39, -77], text: 'Вашингтон' },
+{ coords: [37.771, -122.411], text: 'Сан-Франциско' },        
+],
+        test3 = [
+{ coords: [42.832, 76.942], text: 'Алма-Ата' },
+{ coords: [51.973, 4.893], text: 'Амстердам' },
+{ coords: [35.773, -115.133], text: 'Лас-Вегас' },
+];
+                                                                                                           
+var myMap;                                                                                                           
+                                                                                                                     
+function init() {                                                                                                    
+                                                                                                                     
+    myMap = new ymaps.Map('map', {
+            center: [56.5, 85],
+            zoom: 3,
+            behaviors: ['default', 'scrollZoom']
+    });
+        
+
+
+    // Добавляем коллекцию меток на карту.
+
+};
+
+
+
+
+
+ymaps.ready(init);
+
+function updateMap () {
+        if (typeof test1Col === 'object') {
+                console.log(test1Col);
+                test1Col.removeAll();
+        }
+        if (typeof test2Col === 'object') {
+                test2Col.removeAll();
+        }
+        if (typeof test3Col === 'object') {
+                test3Col.removeAll();
+        }
+        // myMap.geoObjects.removeAll();
+
+// Создаем коллекцию.
+        // Создаем массив с данными.
+    test1Col = new ymaps.GeoObjectCollection();
+    test2Col = new ymaps.GeoObjectCollection();
+    test3Col = new ymaps.GeoObjectCollection();
+    // Заполняем коллекцию данными.
+    test1.forEach(function (point) {
+        test1Col.add(new ymaps.Placemark(
+            point.coords, {
+                iconContent: 'N',
+                balloonContentBody: point.text
+            },{
+            preset: 'twirl#greenIcon'
+        }
+         ));
+    });
+
+
+    test2.forEach(function (point) {
+        test2Col.add(new ymaps.Placemark(
+            point.coords, {
+                iconContent: 'V',
+                balloonContentBody: point.text
+            },{
+            preset: 'twirl#redIcon'
+        }
+         ));
+    });
+
+    test3.forEach(function (point) {
+        test3Col.add(new ymaps.Placemark(
+            point.coords, {
+                iconContent: 'Y',
+                balloonContentBody: point.text
+            },{
+            preset: 'twirl#yellowIcon'
+        }
+         ));
+    });
+
+        var checkbox1 = document.querySelector('#check1');
+        var checkbox2 = document.querySelector('#check2');
+        var checkbox3 = document.querySelector('#check3');
+
+        if (checkbox1.checked) {
+                myMap.geoObjects.add(test1Col);
+        }
+        if (checkbox2.checked) {
+                myMap.geoObjects.add(test2Col);
+        } 
+        if (checkbox3.checked) {
+                myMap.geoObjects.add(test3Col);
+        }
+}
+
+//update on click
+window.onload =function() {var checkboxes = document.querySelectorAll('input[type=checkbox]'); for (var i = 0; i<checkboxes.length;i++) {checkboxes[i].onchange=updateMap}}
+
+</script>
+</head>
+
+<body>
+<input type="checkbox" id="check1"> test1
+<input type="checkbox" id="check2"> test2
+<input type="checkbox" id="check3"> test3
+<br>
+<div id="map" style="width: 100%; height: 600px"></div>
+</body>
+
+</html>

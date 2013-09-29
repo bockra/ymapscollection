@@ -1,7 +1,8 @@
 Create page with collection of points
 using Yandex.Maps API
 
-example bockro.github.io/ymapscollection/index.html
+example 
+http://bockro.github.io/ymapscollection/index.html
 
 using citygen.sh you can 
 create entry for allinone.html from
